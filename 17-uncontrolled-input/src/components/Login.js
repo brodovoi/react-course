@@ -22,7 +22,7 @@ function Login() {
           Password:
           <input type="password" name="password" />
         </label>
-        <button type="login">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );
