@@ -25,7 +25,9 @@ const Courses = () => {
 
   useEffect(() => {
     if (!SORT_KEYS.includes(sortKey)) {
-      navigate();
+      navigate('.');
+      setSortKey();
+      setSortedCourses([...courses]);
     }
   }, [sortKey, navigate]);
 
