@@ -21,6 +21,7 @@ const BookForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (title && author) {
       const book = createBookWithID({ title, author });
       dispatch(addBook(book));
