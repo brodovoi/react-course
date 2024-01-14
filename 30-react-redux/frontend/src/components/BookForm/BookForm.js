@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import createBookWithID from '../../utils/createBookWithID';
 // import { addBook } from '../../redux/books/actionCreators';
-import { addBook, fetchBook } from '../../redux/slices/booksSlice';
+import {
+  addBook,
+  fetchBook,
+  selectIsLoadingViaAPI,
+} from '../../redux/slices/booksSlice';
 import { setError } from '../../redux/slices/errorSlice';
 import booksData from '../../data/books.json';
 import './BookForm.css';
@@ -11,7 +15,8 @@ import './BookForm.css';
 const BookForm = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const isLoadingViaAPi = useSelector(selectIsLoadingViaAPI);
   const dispatch = useDispatch();
 
   const handleOnclickRandomBook = () => {
@@ -34,14 +39,15 @@ const BookForm = () => {
     }
   };
 
-  const handleAddRandomBookViaAPi = async () => {
-    try {
-      setIsLoading(true);
-      await dispatch(fetchBook('http://localhost:4000/random-book-delayed'));
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
+  const handleAddRandomBookViaAPi = () => {
+    dispatch(fetchBook('http://localhost:4000/random-book-delayed'));
+    // try {
+    //   setIsLoading(true);
+    //   await dispatch(fetchBook('http://localhost:4000/random-book-delayed'));
+    // } catch (error) {
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   return (
@@ -74,8 +80,8 @@ const BookForm = () => {
         <button
           type="button"
           onClick={handleAddRandomBookViaAPi}
-          disabled={isLoading}>
-          {isLoading ? (
+          disabled={isLoadingViaAPi}>
+          {isLoadingViaAPi ? (
             <>
               <span>Loading Book...</span>
               <FaSpinner className="spinner" />
